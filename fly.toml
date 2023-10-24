@@ -43,6 +43,6 @@ primary_region = "arn"
   method = "get"
   path = "/health"
   protocol = "http"
-  timeout = 2000
+  timeout = 5000
   tls_skip_verify = false
   [services.http_checks.headers]
