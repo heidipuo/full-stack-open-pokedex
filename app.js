@@ -14,10 +14,6 @@ app.get('/version', (req, res) => {
   res.send('5')
 })
 
-app.get('/favicon.ico', (req, res) => {
-  res.status(204)
-})
-
 app.use(express.static('dist'))
 
 app.listen(PORT, () => {
