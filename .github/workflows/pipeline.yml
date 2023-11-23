@@ -36,6 +36,22 @@ jobs:
         with:
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
           api-key: ${{ secrets.RENDER_API_TOKEN }}
+      - name: Deployment success
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ success() }}
+        with:
+          severity: info    
+          details: to https://fso-pokedex-6tdg.onrender.com/ by ${{ github.event.commits.committer.username }}
+          text: A new version of Pokedex 
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Build Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ failure() }}
+        with:
+              severity: error
+              details: Commit ${{ github.event.commits.url }} by ${{ github.event.commits.committer.username }} broke the build
+              text: Build failed
+              webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
     if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message), '#skip')}}
     needs: [simple_deployment_pipeline]
