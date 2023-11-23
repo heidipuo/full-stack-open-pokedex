@@ -36,16 +36,12 @@ jobs:
         with:
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
           api-key: ${{ secrets.RENDER_API_TOKEN }}
-      - name: commits
-        env:
-          COMMITS: ${{ join(github.event.commits.*.committer.username) }}
-        run: echo "$COMMITS"
       - name: Deployment success
         uses: rjstone/discord-webhook-notify@v1
         if: ${{ success() }}
         with:
           severity: info    
-          description: to https://fso-pokedex-6tdg.onrender.com/ by ${{ github.event.commits.*.committer.username }}
+          description: to https://fso-pokedex-6tdg.onrender.com/ by ${{ join(github.event.commits.*.committer.username) }}
           text: A new version of Pokedex 
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Build Failure
@@ -53,7 +49,7 @@ jobs:
         if: ${{ failure() }}
         with:
           severity: error
-          description: Commit ${{ github.event.commits.*.url }} by ${{ github.event.commits.*.committer.username }} broke the build
+          description: Commit ${{ join(github.event.commits.*.url) }} by ${{ join(github.event.commits.*.committer.username) }} broke the build
           text: Build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release:
