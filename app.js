@@ -11,7 +11,7 @@ app.get('/health', (req, res) => {
 })
 
 
-app.use(express.static('dist'));
+app.use(express.static('dist'))
 
 app.listen(PORT, () => {
   // eslint-disable-next-line
