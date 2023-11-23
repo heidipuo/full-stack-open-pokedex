@@ -38,7 +38,7 @@ jobs:
           api-key: ${{ secrets.RENDER_API_TOKEN }}
       - name: commits
         env:
-          COMMITS: ${{ github.event.commits.committer.username }}
+          COMMITS: ${{ github.event.commits.*.committer.username }}
         run: echo "$COMMITS"
       - name: Deployment success
         uses: rjstone/discord-webhook-notify@v1
