@@ -10,11 +10,8 @@ app.get('/health', (req, res) => {
   res.send('ok')
 })
 
-app.get('/version', (req, res) => {
-  res.send('5')
-})
 
-app.use(express.static('dist'))
+app.use(express.static('dist'));
 
 app.listen(PORT, () => {
   // eslint-disable-next-line
